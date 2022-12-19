@@ -19,11 +19,22 @@ const App = () => {
   const [taskData, setTaskData] = useState(TASKS);
 
   const updateTaskData = (updatedTask) => {
-    const newTaskData = taskData.map(task => {
+    const newTaskData = taskData.map((task) => {
       if (task.id === updatedTask.id) {
         return updatedTask;
       } else {
         return task;
+      }
+    });
+    setTaskData(newTaskData);
+  };
+
+  const deleteTaskData = (deletedId) => {
+    const newTaskData = taskData.filter((task) => {
+      if (task.id === deletedId) {
+        return false;
+      } else {
+        return true;
       }
     });
     setTaskData(newTaskData);
@@ -36,9 +47,11 @@ const App = () => {
       </header>
       <main>
         <div>
-          <TaskList 
+          <TaskList
             tasks={taskData}
-            updateTask={updateTaskData} />
+            updateTask={updateTaskData}
+            deleteTask={deleteTaskData}
+          />
         </div>
       </main>
     </div>
