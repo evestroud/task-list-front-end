@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskList from './components/TaskList.js';
 import './App.css';
-
-const TASKS = [
-  {
-    id: 1,
-    title: 'Mow the lawn',
-    isComplete: false,
-  },
-  {
-    id: 2,
-    title: 'Cook Pasta',
-    isComplete: true,
-  },
-];
+import axios from 'axios';
 
 const App = () => {
-  const [taskData, setTaskData] = useState(TASKS);
+  const [taskData, setTaskData] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:5000/tasks')
+      .then((response) => {
+        const newResponse = response.data.map((task) => {
+          return {...task, isComplete: task.is_complete};
+        });
+        setTaskData(newResponse);
+        console.log(newResponse);
+      });
+  },[]);
 
   const updateTaskData = (updatedTask) => {
     const newTaskData = taskData.map((task) => {
