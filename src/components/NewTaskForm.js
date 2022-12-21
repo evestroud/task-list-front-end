@@ -19,23 +19,25 @@ const NewTaskForm = (props) => {
   };
 
   return (
-    <form>
-      <label htmlFor="title">Title: </label>
-      <input
-        id="title"
-        onChange={setTitle}
-        type="text"
-        value={formData.title}
-      />
-      <label htmlFor="description">Description: </label>
-      <input
-        id="description"
-        onChange={setDescription}
-        type="text"
-        value={formData.description}
-      />
-      <input type="submit" />
-    </form>
+    <div className='container'>
+      <form>
+        <label htmlFor="title">Title: </label>
+        <input
+          id="title"
+          onChange={setTitle}
+          type="text"
+          value={formData.title}
+        />
+        <label htmlFor="description">Description: </label>
+        <input
+          id="description"
+          onChange={setDescription}
+          type="text"
+          value={formData.description}
+        />
+        <input type="submit" />
+      </form>
+    </div>
   );
 };
 
