@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
-const NewTaskForm = (props) => {
+const NewTaskForm = ( {onFormSubmit}) => {
   const [formData, setFormData] = useState({ title: '', description: '' });
 
   const setTitle = (event) => {
@@ -18,19 +19,28 @@ const NewTaskForm = (props) => {
     });
   };
 
+  const submitTaskData = (e) => {
+    e.preventDefault();
+
+    onFormSubmit(formData);
+
+    setFormData({title: '', description: ''});
+
+  };
+
   return (
     <div className='container'>
-      <form>
+      <form onSubmit={submitTaskData}>
         <label htmlFor="title">Title: </label>
         <input
-          id="title"
+          name="title"
           onChange={setTitle}
           type="text"
           value={formData.title}
         />
         <label htmlFor="description">Description: </label>
         <input
-          id="description"
+          name="description"
           onChange={setDescription}
           type="text"
           value={formData.description}
@@ -39,6 +49,10 @@ const NewTaskForm = (props) => {
       </form>
     </div>
   );
+};
+
+NewTaskForm.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
 };
 
 export default NewTaskForm;

@@ -17,8 +17,23 @@ const App = () => {
     });
   }, []);
 
-  const onFormSubmit = (newTask) => {
-    axios.post('http://127.0.0.1:5000/tasks', newTask).then((response) => {});
+  const onFormSubmit = (newTaskData) => {
+    axios.post('http://127.0.0.1:5000/tasks', newTaskData)
+    .then((response) => {
+      const newTasks = [...taskData];
+
+      newTasks.push({
+        id: response.data.id,
+        title: response.data.title,
+        description: response.data.description,
+        ...taskData
+      });
+
+      setTaskData(newTasks);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 
   const updateTaskData = (updatedTask) => {
@@ -55,7 +70,7 @@ const App = () => {
             updateTask={updateTaskData}
             deleteTask={deleteTaskData}
           />
-          <NewTaskForm />
+          <NewTaskForm onFormSubmit={onFormSubmit}/>
         </div>
       </main>
     </div>
